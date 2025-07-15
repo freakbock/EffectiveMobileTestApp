@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">EffectiveMobileTestApp</string>
+    <string name="regin">
+            <font color="#F2F2F3">Нету аккаунта?</font> <font color="#12B956">Регистрация</font>
+    </string>
+</resources>
