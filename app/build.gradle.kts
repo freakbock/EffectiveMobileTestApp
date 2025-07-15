@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.effectivemobiletestapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.effectivemobiletestapp"
@@ -36,7 +36,14 @@ android {
 }
 
 dependencies {
+    implementation("io.insert-koin:koin-core-jvm:3.5.3")
+    implementation("io.insert-koin:koin-android:3.5.3")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
+        implementation(project(":presentation"))
+        implementation(project(":domain"))
+        implementation(project(":data"))
+        implementation(project(":core"))
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
