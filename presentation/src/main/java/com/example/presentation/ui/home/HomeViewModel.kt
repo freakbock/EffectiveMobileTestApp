@@ -14,16 +14,38 @@ class HomeViewModel(private val repository: CoursesRepository) : ViewModel() {
 
     private var currentCourses: List<Course> = emptyList()
 
-    fun loadCourses() {
-        viewModelScope.launch {
-            currentCourses = repository.getCourses()
-            _courses.value = currentCourses
-        }
-    }
-
     fun sortByPublishDateDesc() {
         val sorted = currentCourses.sortedByDescending { it.publishDate }
         _courses.value = sorted
     }
+
+    fun toggleFavorite(courseId: String) {
+        viewModelScope.launch {
+            val currentList = _courses.value.orEmpty().toMutableList()
+            val index = currentList.indexOfFirst { it.id == courseId }
+            if (index != -1) {
+                val course = currentList[index]
+                val isFavorite = course.hasLike
+
+                if (isFavorite) {
+                    repository.removeFavorite(courseId)
+                } else {
+                    repository.addFavorite(courseId)
+                }
+
+                currentList[index] = course.copy(hasLike = !isFavorite)
+                _courses.value = currentList
+            }
+        }
+    }
+
+    fun loadCourses() {
+        viewModelScope.launch {
+            val loaded = repository.getCourses()
+            currentCourses = loaded // ← ЭТОГО НЕ ХВАТАЛО
+            _courses.value = loaded
+        }
+    }
+
 }
 

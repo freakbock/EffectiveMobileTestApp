@@ -9,32 +9,35 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.presentation.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.example.presentation.ui.CourseAdapter
+
 
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
+
     private val viewModel: HomeViewModel by viewModel()
-    private lateinit var recyclerView: RecyclerView
-    private val adapter = CourseAdapter()
+
+    private val adapter by lazy {
+        CourseAdapter { course ->
+            viewModel.toggleFavorite(course.id)
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        recyclerView = view.findViewById(R.id.courses_recyclerview)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val recyclerView = view.findViewById<RecyclerView>(R.id.courses_recyclerview)
         recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.courses.observe(viewLifecycleOwner) { courses ->
-            adapter.submitList(courses)
+        viewModel.courses.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
 
-        // Загружаем курсы
-        viewModel.loadCourses()
-
-        // Реализация сортировки по publishDate по клику на сортировку (например, TextView с id sortTextView)
         val sortTextView = view.findViewById<TextView>(R.id.sort_textview)
         sortTextView.setOnClickListener {
             viewModel.sortByPublishDateDesc()
         }
+
+        viewModel.loadCourses()
     }
 }
 

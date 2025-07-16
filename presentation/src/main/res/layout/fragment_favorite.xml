@@ -17,8 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/cources_layout"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favorite_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -30,6 +30,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-    </LinearLayout>
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

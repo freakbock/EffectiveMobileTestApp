@@ -1,4 +1,3 @@
-// data/mappers/CourseMapper.kt
 package com.example.data.mappers
 
 import com.example.data.model.CourseDto
@@ -7,18 +6,26 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object CourseMapper {
-    private val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+    private val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
     fun fromDto(dto: CourseDto): Course {
         return Course(
             id = dto.id,
             title = dto.title,
             text = dto.text,
-            price = dto.price,
+            price = dto.price.replace(" ", "").toDoubleOrNull() ?: 0.0,
             rate = dto.rate,
-            startDate = formatter.parse(dto.startDate) ?: Date(),
+            startDate = parseDate(dto.startDate),
             hasLike = dto.hasLike,
-            publishDate = formatter.parse(dto.publishDate) ?: Date()
+            publishDate = parseDate(dto.publishDate)
         )
+    }
+
+    private fun parseDate(dateStr: String): Date {
+        return try {
+            formatter.parse(dateStr) ?: Date()
+        } catch (e: Exception) {
+            Date()
+        }
     }
 }

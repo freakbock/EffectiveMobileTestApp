@@ -1,15 +1,15 @@
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import com.example.data.remote.CourseApi
+import com.example.data.api.CoursesApi
 
 
 val networkModule = module {
     single {
         Retrofit.Builder()
-            .baseUrl("https://your-api.com/")
+            .baseUrl("http://10.0.2.2:5000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(CourseApi::class.java)
+            .create(CoursesApi::class.java)
     }
 }

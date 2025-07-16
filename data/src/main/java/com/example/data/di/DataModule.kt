@@ -37,21 +37,16 @@ val dataModule = module {
             .build()
     }
 
-    single {
-        Retrofit.Builder()
-            .baseUrl("https://drive.usercontent.google.com/u/0/uc?id=15arTK7XT2b7Yv4BJsmDctA4Hg-BbS8-q&e\n" +
-                    "xport=download")
-            .client(get())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
     single<CoursesApi> {
         get<Retrofit>().create(CoursesApi::class.java)
     }
 
     single<CoursesRepository> {
-        CoursesRepositoryImpl(get())
+        CoursesRepositoryImpl(
+            api = get(),
+            dao = get()
+
+        )
     }
 }
 

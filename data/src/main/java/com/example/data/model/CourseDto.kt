@@ -1,15 +1,15 @@
-// data/model/CourseDto.kt
 package com.example.data.model
 
-import com.google.gson.annotations.SerializedName
+import java.util.Date
 
 data class CourseDto(
     val id: String,
     val title: String,
     val text: String,
-    val price: Double,
+    val price: String, // ← изменили
     val rate: Float,
     val startDate: String,
     val hasLike: Boolean,
     val publishDate: String
 )
+
